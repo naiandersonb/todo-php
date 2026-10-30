@@ -18,7 +18,11 @@ class TodoController extends Controller
          */
         $user = auth()->user();
 
-        return view('todos.index');
+
+        dd($user->toArray(), $user->todos()->get());
+        return view('todos.index', [
+            'todos' => $user->todos()->get() ?? []
+        ]);
     }
 
     /**

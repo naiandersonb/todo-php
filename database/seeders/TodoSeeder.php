@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Todo;
+use App\Models\User;
+use Database\Factories\TodoFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +15,6 @@ class TodoSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Todo::factory()->count(10)->recycle(User::all())->create();
     }
 }

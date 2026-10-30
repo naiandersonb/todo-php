@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTodoRequest;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +20,6 @@ class TodoController extends Controller
         $user = auth()->user();
 
 
-        dd($user->toArray(), $user->todos()->get());
         return view('todos.index', [
             'todos' => $user->todos()->get() ?? []
         ]);
@@ -30,39 +30,31 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        return view('todos.create');
+    }
+
+    public function done(Todo $todo)
+    {
+        // dd($todo->toArray());
+
+        $todo->fill(['completed_at' => now()])->save();
+
+        return to_route('todos.index');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateTodoRequest $request)
     {
-        //
-    }
+        /**
+         * @var User $user
+         */
+        $user = auth()->user();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Todo $todo)
-    {
-        //
-    }
+        $user->todos()->create($request->validated());
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Todo $todo)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Todo $todo)
-    {
-        //
+        return to_route('todos.index');
     }
 
     /**
@@ -70,6 +62,7 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
-        //
+        $todo->delete();
+        return to_route('todos.index');
     }
 }

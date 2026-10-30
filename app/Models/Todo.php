@@ -10,6 +10,13 @@ class Todo extends Model
     /** @use HasFactory<\Database\Factories\TodoFactory> */
     use HasFactory;
 
+    protected function casts()
+    {
+        return [
+            'completed_at' => 'datetime'
+        ];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

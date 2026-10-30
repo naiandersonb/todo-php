@@ -67,6 +67,12 @@ Route::middleware('auth')->group(function () {
 
     // region todos
     Route::get('/', [TodoController::class, 'index'])->name('todos.index');
+    Route::get('/todos/create', [TodoController::class, 'create'])->name('todos.create');
+    Route::post('/todos/create', [TodoController::class, 'store']);
+
+    Route::put('/todos/{todo}/done', [TodoController::class, 'done'])->name('todos.done');
+
+    Route::delete('/todos/{todo}/destroy', [TodoController::class, 'destroy'])->name('todos.destroy');
     // endregion
 
 

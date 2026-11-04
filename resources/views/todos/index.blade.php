@@ -30,7 +30,7 @@
                 <div class="flex flex-row items-center gap-2">
                     @unless($completed)
                         <x-form put action="{{ route('todos.done', $todo) }}">
-                            <x-primary-button>Conluir</x-primary-button>
+                            <x-primary-button>Concluir</x-primary-button>
                         </x-form>
                     @endunless
 

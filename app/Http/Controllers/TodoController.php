@@ -62,6 +62,11 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
+        /**
+         * @var User $user
+         */
+        $user = auth()->user();
+        abort_if($todo->user_id !== $user->id, 403);
         $todo->delete();
         return to_route('todos.index');
     }
